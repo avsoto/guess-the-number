@@ -1,34 +1,29 @@
-import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class HumanPlayer extends Player {
     private ArrayList<Integer> guesses;
+    private Scanner scanner;
 
     public HumanPlayer(String name) {
         super(name);
         this.guesses = new ArrayList<>();
+        this.scanner = new Scanner(System.in); // Inicializa el Scanner
     }
 
-    //Métodos makeGuess()
+    // Métodos makeGuess()
     @Override
     public int makeGuess() {
-        String input = JOptionPane.showInputDialog(null, "Enter your guess:");
+        System.out.print("Enter your guess: ");
 
-        // Verifica si el input es nulo (cuadro de diálogo cerrado)
-        if (input == null) {
-            System.out.println("Input was canceled. Exiting the game.");
-            System.exit(0); // Salir del juego si el usuario cancela
-        }
-
-        // Intenta convertir la entrada a un número
+        // Intenta leer la entrada y convertirla a un número
         try {
-            return Integer.parseInt(input);
+            int guess = Integer.parseInt(scanner.nextLine()); // Lee el input del jugador desde la consola
+            guesses.add(guess); // Almacena la adivinanza en la lista
+            return guess;
         } catch (NumberFormatException e) {
             System.out.println("Please enter a valid number.");
             return makeGuess(); // Pide la adivinanza nuevamente si hay un error
         }
     }
-
-
-
 }
