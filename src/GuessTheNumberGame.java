@@ -40,11 +40,17 @@ public class GuessTheNumberGame {
 
             while (!guessedCorrectly) {
                 int guess = checkGuess(currentPlayer);
-                guessedCorrectly = checkIfGuessCorrect(guess);
+                guessedCorrectly = checkIfGuessCorrect(guess, currentPlayer);
 
-                // Alterna entre los jugadores después de cada turno
-                currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                // Cambia el jugador solo si no adivinó correctamente
+                if (!guessedCorrectly) {
+                    currentPlayer = (currentPlayer == player1) ? player2 : player1;
+                }
             }
+
+            // Al finalizar el juego, muestra el mensaje final para el jugador que adivinó correctamente
+            displayFinalMessage(currentPlayer); // Muestra el mensaje para el ganador
+
 
             playAgain = askToPlayAgain();
         } while (playAgain);
@@ -64,18 +70,20 @@ public class GuessTheNumberGame {
         System.out.println("Get ready to flex those brain muscles! In this game, you and your opponent will take turns guessing a secret number between 1 and 100.");
         System.out.println("Each time you guess, I'll give you a hint: 'Too high!', 'Too low!', or if you're spot on, 'Bingo!'.");
         System.out.println("Will you outsmart the computer and prove your guessing prowess? Let's find out! Good luck, and may the best guesser win!");
-        System.out.print("Step right up! What’s your name, brave guesser? ");
+        System.out.print("Step right up! What's your name, brave guesser? ");
         Scanner scanner = new Scanner(System.in); // Crear un nuevo Scanner para la entrada
         String name = scanner.nextLine(); // Leer el nombre del jugador
         System.out.println("Welcome to the game, " + name + "! Ready to put your guessing skills to the test? Let's go!");
-        return new HumanPlayer(name);
+        return new HumanPlayer(name, scanner);
     }
 
     protected int generateTargetNumber() {
         return random.nextInt(MAX_NUMBER) + 1;
     }
 
-    private boolean checkIfGuessCorrect(int guess) {
+    private boolean checkIfGuessCorrect(int guess, Player currentPlayer) {
+        currentPlayer.addGuess(guess);
+
         if (guess > targetNumber) {
             System.out.println("Ugh, you're too far away!");
             return false;
@@ -83,9 +91,14 @@ public class GuessTheNumberGame {
             System.out.println("Oops! You're digging too deep!");
             return false;
         } else {
-            System.out.println("Correct! The player has proven to be a guessing master!: " + targetNumber);
+            System.out.println("Correct!");
             return true;
         }
+    }
+
+    private void displayFinalMessage(Player player) {
+        System.out.println("Congratulations, " + player.getName() + "! You proved to be a guessing master!: " + targetNumber);
+        System.out.println("Attempts: " + player.getGuesses());
     }
 
     private boolean askToPlayAgain() {
