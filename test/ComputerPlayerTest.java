@@ -34,7 +34,7 @@ class ComputerPlayerTest {
 
         computerPlayer.makeGuess();
 
-        // Verifica que se ha agregado la adivinanza a la lista
+        // Verifica que el tamaño de la lista de adivinanzas haya aumentado en 1
         assertEquals(initialSize + 1, computerPlayer.getGuesses().size(), "La adivinanza debe ser agregada a la lista");
     }
 

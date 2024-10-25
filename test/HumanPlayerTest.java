@@ -7,16 +7,16 @@ import java.util.Scanner;
 import static org.mockito.Mockito.*;
 
 
-
 class HumanPlayerTest {
     private HumanPlayer humanPlayer;
+    // Simula interacciones con la entrada del usuario sin depender de la entrada real
     private Scanner mockScanner;
 
 
     @BeforeEach
     void setUp() {
-        // Inicializa el objeto HumanPlayer antes de cada prueba
-        mockScanner = mock(Scanner.class); // Crea un mock de Scanner
+        // Creamos un mock de Scanner para simular la entrada del usuario, sin depender del teclado físico
+        mockScanner = mock(Scanner.class);
         humanPlayer = new HumanPlayer("Ana", mockScanner);
     }
 
@@ -24,6 +24,8 @@ class HumanPlayerTest {
     void testMakeGuess_ValidInput() {
         // Simula una entrada de usuario con el número 50
         String simulatedInput = "50\n";
+
+        //Reemplazamos la entrada del sistema con esta entrada con 'set in'
         System.setIn(new ByteArrayInputStream(simulatedInput.getBytes()));
 
         // Crea un nuevo Scanner con la entrada simulada
@@ -61,6 +63,7 @@ class HumanPlayerTest {
     @Test
     void testGetGuesses() {
         // Simulamos varias entradas válidas: 25 y 75
+        //Se usa Mockito para simular dos entradas de usuario: 25 y 75.
         when(mockScanner.nextLine()).thenReturn("25", "75");
 
         // Ejecuta makeGuess() dos veces

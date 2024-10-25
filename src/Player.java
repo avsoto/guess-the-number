@@ -9,6 +9,7 @@ public abstract class Player {
 
     public Player(String name) {
         this.name = name;
+        //Creamos la lista vacía para almacenar adivinanzas
         this.guesses = new ArrayList<>();
     }
 

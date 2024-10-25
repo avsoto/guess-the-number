@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GuessTheNumberGame {
-    // Maneja la lógica principal, decide qué jugador asume el próximo turno
+    // Maneja la lógica principal y gestiona el cambio de turnos entre los jugadores
 
     private static final int MAX_NUMBER = 100;
     private final Player player1;
@@ -11,15 +11,17 @@ public class GuessTheNumberGame {
     private int targetNumber;
     private final Scanner scanner;
 
+    //El constructor inicializa
     public GuessTheNumberGame(Player player1, Player player2, Random random) {
         this.player1 = player1;
         this.player2 = player2;
         this.random = random;
         this.targetNumber = generateTargetNumber();
-        this.scanner = new Scanner(System.in); // Inicializa el Scanner
+        this.scanner = new Scanner(System.in);
     }
 
     public static void main(String[] args) {
+        //Creamos las instancias necesarias
         Random random = new Random();
         Player player1 = createHumanPlayer();
         Player player2 = new ComputerPlayer(random);
@@ -38,6 +40,7 @@ public class GuessTheNumberGame {
             // Empieza el jugador humano
             Player currentPlayer = player1;
 
+            //Se ejecuta el juego hasta que alguien adivine correctamente
             while (!guessedCorrectly) {
                 int guess = checkGuess(currentPlayer);
                 guessedCorrectly = checkIfGuessCorrect(guess, currentPlayer);
@@ -51,8 +54,9 @@ public class GuessTheNumberGame {
             // Al finalizar el juego, muestra el mensaje final para el jugador que adivinó correctamente
             displayFinalMessage(currentPlayer); // Muestra el mensaje para el ganador
 
-
             playAgain = askToPlayAgain();
+
+            //El bucle debe seguir ejecutandose mientras playAgain sea true
         } while (playAgain);
 
         System.out.println("\n*** Thank you for playing! Goodbye! ***");
@@ -82,6 +86,7 @@ public class GuessTheNumberGame {
     }
 
     private boolean checkIfGuessCorrect(int guess, Player currentPlayer) {
+        //Guardamos la adivinanza para tener un registro
         currentPlayer.addGuess(guess);
 
         if (guess > targetNumber) {
@@ -103,6 +108,7 @@ public class GuessTheNumberGame {
 
     private boolean askToPlayAgain() {
         System.out.print("Are you ready to test your luck again? (yes/no):");
+        //Eliminamos espacios en blanco al inicio y al final
         String response = scanner.nextLine().trim().toLowerCase();
         return response.equals("yes");
     }
