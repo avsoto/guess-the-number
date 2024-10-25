@@ -1,4 +1,4 @@
-﻿# Guess The Number
+### Guess The Number
 
 **Guess The Number** es un emocionante juego interactivo donde los jugadores compiten para adivinar un número secreto generado aleatoriamente por la computadora. El juego puede ser jugado por un jugador humano y un jugador controlado por la computadora, alternando sus turnos para hacer sus conjeturas.
 
