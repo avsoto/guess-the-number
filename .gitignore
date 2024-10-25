@@ -1,2 +1,5 @@
-/out/
-/.idea/
+# Ignorar carpeta de salida de Java
+out/
+
+# Ignorar configuraciones de IDE
+.idea/
